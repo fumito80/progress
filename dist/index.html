@@ -12,18 +12,16 @@
         .then(response => {
           pgbar.max = Number(response.headers.get('Content-Length'));
           const reader = response.body.getReader();
-          function read(promise) {
-            return promise.then(({ done, value }) => {
-              if (done) {
-                return 'done';
-              }
-              pgbar.value += value.length;
-              return read(reader.read());
-            });
+          function read({ done, value }) {
+            if (done) {
+              return 'done';
+            }
+            pgbar.value += value.length;
+            return reader.read().then(read);
           }
-          return read(reader.read());
+          return reader.read().then(read);
         })
-        .then((result) => {
+        .then(result => {
           console.log(result);
         });
     }
