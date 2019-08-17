@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <progress max="100" value="0"></progress>
+  <button class="download">download</button>
+  <script>
+    function xhrDL() {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "/download");
+      xhr.addEventListener("progress",function(ev){
+        console.log(ev.loaded, ev.total);
+      });
+      xhr.send();
+    }
+    function fetchDL() {
+      const pgbar = $$('progress')[0];
+      pgbar.value = 0;
+      fetch("/download")
+        .then(async response => {
+          // 全バイト数を先に取得
+          const times = Number(response.headers.get("Content-Length"));
+          pgbar.max = times
+          // 受信したバイト数
+          let loaded = 0;
+          const reader = response.body.getReader();
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+              break;
+            }
+            // 読んだデータはバイナリデータ（Uint8Array）で与えられる
+            loaded += value.length;
+            console.log(`${loaded} / ${times}`);
+            pgbar.value = loaded;
+          }
+          return 'done';
+        })
+        .then((result) => {
+          console.log(result);
+        });
+    }
+    const $$ = (selecor, parent = document) => [...parent.querySelectorAll(selecor)]; 
+    document.addEventListener('DOMContentLoaded', () => {
+      $$('.download')[0].addEventListener('click', fetchDL);
+    });
+  </script>
+</body>
+</html>

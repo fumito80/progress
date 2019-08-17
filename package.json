@@ -1,0 +1,26 @@
+{
+  "name": "progress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "coffee": "coffee -c ./",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takadaZ/progress.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takadaZ/progress/issues"
+  },
+  "homepage": "https://github.com/takadaZ/progress#readme",
+  "devDependencies": {
+    "coffeescript": "^2.4.1"
+  },
+  "dependencies": {}
+}
