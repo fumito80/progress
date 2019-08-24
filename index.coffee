@@ -3,6 +3,8 @@
 fs = require "fs"
 http = require "http"
 
+times = 20
+
 http
   .createServer (req, res) ->
     switch req.url
@@ -12,18 +14,22 @@ http
         fs.readFile "./dist/index.html", (err, data) ->
           res.end data
       when "/download"
+        console.log "start download"
         res.writeHead 200,
-          "Connection": "keep-alive"
-          "content-type": "text/plain"
-          "content-length": "5"
-        [...Array(5)].reduce (promise, _, i) ->
+          # "Connection": "keep-alive"
+          "Connection": "close"
+          "Content-Type": "text/plain"
+          "Content-Length": times
+        [...Array(times)].reduce (promise) ->
           promise.then ->
             new Promise (resolve) ->
               setTimeout () ->
-                res.write String(i)
+                res.write 'x'
                 resolve()
-              , 3000
+              , 2000
         , Promise.resolve()
-        .then -> res.end()
+        .then ->
+          res.end()
+          console.log "done"
   .listen 8080, ->
     console.log "Start http server 8080"

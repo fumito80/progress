@@ -4,7 +4,7 @@
   <progress max="100" value="0"></progress>
   <button class="download">download</button>
   <script>
-    const $$ = (selecor, parent = document) => [...parent.querySelectorAll(selecor)]; 
+    const $$ = (selecor, parent = document) => [...parent.querySelectorAll(selecor)];
     function fetchDL() {
       const pgbar = $$('progress')[0];
       pgbar.value = 0;
@@ -20,6 +20,7 @@
             return reader.read().then(read);
           }
           return reader.read().then(read);
+          // new Response(stream, { headers: { "Content-Type": "text/plain" } });
         })
         .then(result => {
           console.log(result);
