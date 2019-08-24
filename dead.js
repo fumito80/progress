@@ -68,7 +68,7 @@ $("#jyosei").contents().find(".cover > .ladyPop")
             const div = document.createElement('div');
             document.body.append(div);
             div.append(dom.querySelector('#prof'), dom.querySelector('#comment'));
-            div.style.cssText = 'display:grid; grid-template-columns:min-content min-content; width:min-content; background:#eff0f1';
+            div.style.cssText = 'display:grid; grid-template-columns:min-content min-content; width:min-content; background:#eff0f1; margin:5px';
             div.querySelector('#shopComment').style.cssText = 'height:300px';
             const name = div.querySelector('#name');
             name.innerHTML = `<a href="${a.href}" target="_blank">${name.textContent}</a>`;
