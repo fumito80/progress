@@ -47,12 +47,11 @@ function getCp(parentSelector) {
   .reduce((parent, [el]) => parent.prepend(el), $(".shop_list_area"));
 
 // 1st step
-$("#jyosei").contents().find(".cover > .ladyPop")
+$("#jyosei").contents().find(".ladyList:has(.listTime:contains('二軍調整'))").remove().end()
+  .find(".cover > .ladyPop")
   .toArray()
-  // .filter(el => !el.closest(".ladyList").querySelector(".listTime").textContent.includes("二軍調整"))
   .reduce((promise, a) => {
     return promise.then(_ => {
-      // return new Promise(resolve => $(`<iframe src="${a.href}" class="omg">`).on("load", resolve).appendTo(document.body));
       return new Promise(resolve => {
         fetch(a.href)
           .then(resp => resp.blob())
@@ -78,11 +77,6 @@ $("#jyosei").contents().find(".cover > .ladyPop")
     });
   }, Promise.resolve())
   .then(_ => alert('done'))
-  // .then(_ => $(".omg").width(700).height(500));
-  // .then(_ => document.styleSheets[0])
-  // .then(sheet => {
-  //   sheet.insertRule('.block > div { float: left; background-color: whitesmoke; }');
-  // });
 
 // Next step
 const F = f => g => x => y => f(g(y)(x));
